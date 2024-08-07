@@ -1,0 +1,81 @@
+Introduction
+========================================================
+    - Deadline for the project is Nov 6, 2023 11:59PM and last chance to ask any question 
+      about the project is Nov 13, 2023 11:59PM.
+
+
+Follow these commands to install needed packages.
+
+    $ module load python3/3.9.0 
+    $ module load R
+    $ R
+    $ install.packages("cluster")
+    $ install.packages("clusterSim")
+    $ install.packages("ade4")
+
+
+1) Visit the tutorial page for the entrotypes paper at
+   https://enterotype.embl.de/enterotypes.html and read the "DATASETS" and
+   "UNDERSTANDING THE GENUS ABUNDANCE TABLE" sections to answer the following 
+   questions. The dataset is already downloaded and available at 
+   /groups/bioc6243/data/csv/MetaHIT_SangerSamples.genus.txt
+
+   a) How many columns does the dataset contain?
+   b) How many rows does the dataset contain?
+   c) What is given on the first column?
+   d) What is given on the rest of the columns?
+   e) What does the genus identifier "-1" represent in the second row?
+
+
+2) Optimal cluster size
+   From your private project-metagenomics folder run the command
+
+   Rscript optimal-cluster-size.r 
+
+   to output "sizes.png" plot file. In order to view this 
+   image file, you will need to export it using "scp" (for mac) or 
+   "wincp" (for windows). For example, if your laptop is map,
+   you can do use the following command (from your laptop) to 
+   scp "sizes.png" from cerberus to your laptop:
+  
+   scp $username@cerberus.arc.gwu.edu:~/mybioc6243/project-metagenomics/sizes.png ~/Downloads/
+
+   
+    a) What is the optimal number of clusters the dataset can 
+       be clustered into?
+
+
+3) Clustering using bet and pca analysis 
+   From your private project-metagenomics folder run the command
+        
+   Rscript clustering.r
+           
+   to output "bet.png" and "pca.png" plot files. In order to view this
+   image file, you will need to export it using "scp" (for mac) or
+   "wincp" (for windows).
+
+    a) Compare your output "bet.png" with Fiture 2a in the nature paper
+       (Arumugam, Raes et al. 2011). Does it look the same aside the 
+       labeling of the samples? You can refer to the mapping of sample IDs to 
+       cluster IDs given in the csv file /groups/bioc6243/data/csv/entrotypes.csv
+
+    b) Run the following command to list variance of each genus in a given 
+       cluster (identified by 1,2, and 3). For example the command
+
+       python3 dump-cluster-abandance.py -c 1 
+
+       will list genera ordered by their variance in cluster 1.
+
+       Run the above command for clusters 1, 2 and 3, and report
+       the most variable genus for each cluster.
+
+
+
+
+
+
+
+Reference:
+ https://enterotype.embl.de/enterotypes.html
+
+

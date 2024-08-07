@@ -1,0 +1,160 @@
+Introduction
+========================================================
+    - Please read the following items that are relevant to this project. You are 
+      expected to have familiarized yourself with basic Linux commands.
+    
+    - Deadline for the project is Oct 23, 2023 11:59PM and last chance to ask any question 
+      about the project is Oct 30, 2023 11:59PM.
+
+
+
+Part-I: Understanding FASTQ format
+========================================================
+1) Using a toy fastq example file /groups/bioc6243/data/fastq/toy.fastq where every four lines 
+correspond to one sequence read: 
+    a) What is given in the first line?
+    b) What is given in the second line?
+    c) What is given in the third line?
+    d) What is given in the fourth line?
+    e) What is the number of lines in that file?
+    f) How many reads are represented in that file?
+    g) How much disk space is the file taking (in MegaBytes)?
+
+2) Using a real fastq example file /groups/bioc6243/data/fastq/SRR1039508_1.fastq:
+    a) What is the number of lines in that file?
+    b) How many reads are represented in that file?
+    c) How much disk space is the file taking (in MegaBytes)?
+
+
+Part-II: Understanding SAM and BAM formats
+========================================================
+1) Using a toy sam example file /groups/bioc6243/data/sam/toy.sam
+    a) List each column in this format along with description of the column (you need to 
+       fine online documentation page for "SAM short read alignment format"). You should use 
+       your own words to give description of each column.
+    b) What is the number of lines in that file?
+    c) How much disk space is the file taking (in MegaBytes)?
+    d) What is a BAM file format (in relation to SAM file)? 
+    e) How would you convert SAM file into a BAM file?
+
+2) Using a real sam example file /groups/bioc6243/data/sam/SRR1039512.Aligned.out.sam:
+    a) What is the number of lines in that file?
+    b) How much disk space is the file taking (in MegaBytes)?
+    c) How much disk space is the corresponding bam file (/groups/bioc6243/data/bam/SRR1039512.Aligned.out.bam) 
+       taking?
+
+
+Part-III: Understanding VCF format
+========================================================
+1) Using a toy vcf example file /groups/bioc6243/data/vcf/toy.vcf:
+    a) What is the number of lines in that file?
+    b) How much disk space is the file taking (in MegaBytes)?
+    c) With the help of online documentation for VCF file and the first lines in toy.vcf file 
+       that start with "#", list each column and give description using your own words.
+
+2) Using a real vcf example file /groups/bioc6243/data/vcf/real.vcf:
+    a) What is the number of lines in that file?
+    b) How much disk space is the file taking (in MegaBytes)?
+
+
+Part-IV: Understanding GTF format
+========================================================
+1) Using a real gtf example file /groups/bioc6243/data/gtf/Homo_sapiens.GRCh37.75.gtf:
+    a) With the help of online documentation for gtf file, list each column and give description 
+       using your own words.
+    b) What is the number of lines in that file?
+    c) How much disk space is the file taking (in MegaBytes)?
+    d) Find the coordinates for the KRAS (ENSG00000133703) gene using the "grep" linux command 
+       and looking at the lines where the third column has value of "gene".
+
+
+
+Part-V: Analyzing VCF files Understanding VCF
+========================================================
+For this part of the project, we will look into vcf files downloaded from The Cancer Genome Atlas (TCGA). The 
+original VCF files downloaded parsed/reduced to contain mutation calls that fall in the KRAS gene 
+range only. There are a total of 16773 such reduced files under /groups/bioc6243/data/vcf/tcga/ 
+folder. The file name structure is {cancer_id}-subject-{subject_id}. For example, the file named 
+"LUAD-subject-7925.vcf" contains mutations in KRAS gene for a subject_id=7925 that has "LUAD" cancer. 
+If you want to learn what "LUAD" cancer means, look it up in the file /groups/bioc6243/data/csv/tcganames.csv 
+and you will find it is a short name for "Lung adenocarcinoma".
+
+
+1) Exploring input files
+    
+    a) Using various linux commands, find the number of files/subjects for each cancer 
+       type (you will need to creaet a two column csv file with two fields "cancer_id" and "number_of_subjects").
+
+
+2) Exploring first top frequency SNP in each cancer
+
+   In order to be able to run python3, you will need to load the module using the following
+   command:
+
+	$ module load python3/3.9.0   
+ 
+    a) The script dump-snp-frequency.py lists nth frequent SNP that has frequency greater than
+       a given cut off. For example, the command "python3 dump-snp-frequency.py -c 0.05 -r 1"
+       will list the 1st most frequent SNP if its frequency is greather than 0.05. Similarly,
+       the command "python3 dump-snp-frequency.py -c 0.05 -n 2" will list the 2nd most frequent 
+       SNP if its frequency is greather than 0.05. 
+       
+       How many distinct SNPs do you find if you run "python3 dump-snp-frequency.py -c 0.05 -r 1"? 
+       Give the listing you get.
+
+
+    b) The script "dump-snp-effect.py" can be used to see the effect of a SNP on the transcript and 
+       peptide sequences. For example, the command "python3 dump-snp-effect.py -s '12:25398285:C>A' " 
+       gives effect of the '12:25398285:C>A' SNP on the transcript and peptide sequences. 
+       
+       For each SNP you get in 2(a), give the effect of the SNP.
+
+
+    c) The script dump-formatted-cds.py can be used to display a formatted transcript sequence. For
+       example, the command "python3 dump-formatted-cds.py -t ENST00000256078" will display
+       a formatted sequence for the transcript ENST00000256078.
+
+       Use dump-formatted-cds.py script to display formatted transcript sequences for all transcript IDs 
+       you get from 2(b), and validate the effect of the associated SNP. 
+
+       Create a table with the following format:
+
+       #snp_in_genome,snp_effect_in_cds,snp_effect_in_peptide,passed_validation
+       12:11111111:X>Y,ENST00000000001:111:XYZ>YYZ,ENSP00000000001:22:A>E,yes
+       12:11111111:X>Z,ENST00000000001:111:XYZ>ZYZ,ENSP00000000002:22:A>S,no
+
+    d) Explore KRAS in BioMuta (https://hive.biochemistry.gwu.edu/biomuta/proteinview/P01116).
+       For each SNP you get in 2(a), what is the affected position in the UniProtKB sequence?
+
+    e) Explore KRAS in UniProtKB (https://www.uniprot.org/uniprot/P01116) in the "Pathology & Biotech"
+       section to list extra findings for the protein positions you get in 2(d).
+       
+       
+3) Repeat second top frequency SNP in each cancer
+    
+    a) How many distinct SNPs do you find if you run "python3 dump-snp-frequency.py -c 0.05 -r 2"?
+       Give the listing you get.
+
+    b) For each SNP you get in 3(a), give the effect of the SNP.
+
+    c) Use dump-formatted-cds.py script to display formatted transcript sequences for all transcript IDs
+       you get from 3(b), and validate the effect of the associated SNP.
+
+       Create a table with the following format:
+
+       #snp_in_genome,snp_effect_in_cds,snp_effect_in_peptide,passed_validation
+       12:11111111:X>Y,ENST00000000001:111:XYZ>YYZ,ENSP00000000001:22:A>E,yes
+       12:11111111:X>Z,ENST00000000001:111:XYZ>ZYZ,ENSP00000000002:22:A>S,no
+
+    d) Explore KRAS in BioMuta (https://hive.biochemistry.gwu.edu/biomuta/proteinview/P01116).
+       For each SNP you get in 3(a), what is the affected position in the UniProtKB sequence?
+
+    e) Explore KRAS in UniProtKB (https://www.uniprot.org/uniprot/P01116) in the "Pathology & Biotech"
+       section to list extra findings for the protein positions you get in 3(d). 
+
+
+
+
+
+
+    
