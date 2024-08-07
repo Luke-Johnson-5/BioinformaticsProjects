@@ -1,0 +1,146 @@
+Introduction
+========================================================
+    - Deadline for the project is Nov 27 11:59PM and last chance 
+      to ask any question about the project is Nov 20 11:59PM.
+
+Reference:
+   https://bioconductor.org/packages/devel/bioc/vignettes/DESeq2/inst/doc/DESeq2.html
+   https://statomics.github.io/SGA2020/assets/airway.html
+   https://www.ncbi.nlm.nih.gov/Traces/study/?acc=PRJNA229998&o=acc_s%3Aa
+
+
+
+Part-1: On the experimental data
+================================
+Read the article given at https://pubmed.ncbi.nlm.nih.gov/24926665/ and answer the following
+questions.
+    a) How many genes were found to be differentially expressed?
+    b) List the glucocorticoid-responsive genes that were identified.
+    c) Which gene was found to have SNPs that were associated with inhaled corticosteroid resistance?
+
+
+Part-2: Using STAR short read alignment program
+========================================================
+    The "star-align.sh" shell script performs the alignment of 
+    reads from sample SRR1039508 to the partial genome indexed 
+    in the previous step.
+
+    Run the following command and check your output under the tmp 
+    folder (/groups/bioc6243/data/tmp/). All files in this tmp 
+    folder that start with your username are files by you.
+
+    $ nohup sh star-align.sh &
+
+
+Part-3: Parsing aligned reads for gene "MPV17" located in chr_2:27532360-27548547
+=================================================================================
+    The following commands:
+
+    $ module load python3/3.9.0
+    $ python3 sam-parser.py -i /groups/bioc6243/data/tmp/$username-aln-SRR1039508.Aligned.out.sam
+
+    lists out splicing junction in the "MPV17" gene sorted by the number of times
+    (frequency) the position has been observed.
+
+        a) third column is "2", what does this condition mean?
+        b) fourth column >= 27532360, what does this condition mean?
+        c) fourth column <= 27548547, what does this condition mean?
+        d) sixth column contains "N", what does this condition mean?
+        e) sixth column does not contain "S", what does this condition mean?
+        f) What are the top 6 most frequent positions listed out from the above command?
+        g) Now let's have a look at the annotation or gtf file.
+           Use the command given below lists transcripts for MPV17 along with 
+           the exon start positions. Which transcripts contain all
+           the exon start positions given out in step (f)?
+           
+            $ module load python3/3.9.0        
+            $ python3 extract-exons.py
+
+
+
+Part-4.1: Analysis in R
+=======================
+Use the following command to get into the R console
+	  
+	$ module load R
+	$ R 
+
+
+Part-4.2: Creating summarizedExperiment object
+==============================================
+To run this part, isssue the following command from the R console:
+
+	> source("script.1.R")
+    	   
+   a) Describe what is done in this step.
+
+
+Part-4.3: Log transformation
+============================
+To run this part, isssue the following command from the R console:
+	
+	> source("script.2.R")
+	
+   a) Describe what is done in this step.
+
+
+Part-4.4: QC plots
+==================
+To run this part, isssue the following command from the R console:
+
+	> library("pheatmap")
+	> library("RColorBrewer")
+	> sampleDists <- dist( t( assay(rld) ) )
+	> sampleDistMatrix <- as.matrix( sampleDists )
+	> colors <- colorRampPalette( rev(brewer.pal(9, "Blues")) )(255)
+	> dev <- png(file="heatmap.png")
+	> pheatmap(sampleDistMatrix, clustering_distance_rows=sampleDists, clustering_distance_cols=sampleDists, col=colors)
+	> dev.off()
+	> dev <- png(file="pca.png")
+	> plotPCA(rld, intgroup =c("dex", "cell"))
+	> dev.off()
+
+The above steps should produce two image files ("heatmap.png" and "pca.png"). Use the
+scp command to copy it from the server to your laptop (you need to do this from your laptop).
+By looking at those images, answer the following questions.
+
+   a) What is the closest pair of samples?
+   b) What is the pair of samples with largest distance between?
+
+
+
+Part-4.5: Interactive analysis
+==============================
+To run this part, isssue the following command from the R console:
+
+	> source("script.3.R")
+	> source("script.4.R")
+	> source("script.5.R")
+
+   a) Describe what is done in script.3.R
+   b) Describe what is done in script.4.R
+   c) Describe what is done in script.5.R
+
+
+Part-4.6: Final script
+======================
+To run this part, isssue the following command from the R console:
+
+        > source("script.6.R")
+
+    a) Describe what is done in script.6.R
+    b) What does adjusted p-value represent? Why do we need it - why don’t we just use p-value?
+    c) For the top 5 genes reported in your CSV output file "results.csv", look them up at 
+       the ENSEMBL website and see if their differential expression under dex treatment 
+       makes sense. For example, for ENSG00000162692 the URL you need to go to will be 
+       http://useast.ensembl.org/Homo_sapiens/Gene/Summary?db=core;g=ENSG00000162692
+
+
+
+
+
+
+
+
+
+    

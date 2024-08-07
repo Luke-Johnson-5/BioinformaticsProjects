@@ -1,0 +1,7 @@
+	STAR --genomeDir /groups/bioc6243/data/indexed-genome/ --readFilesIn /groups/bioc6243/data/fastq//SRR1039512_1.fastq /groups/bioc6243/data/fastq//SRR1039512_2.fastq --runThreadN 8 --outFileNamePrefix /groups/bioc6243/data/sam/SRR1039512.
+	STAR version: 2.7.10a   compiled: 2022-01-14T18:50:00-05:00 :/home/dobin/data/STAR/STARcode/STAR.master/source
+Nov 06 20:39:23 ..... started STAR run
+Nov 06 20:39:24 ..... loading genome
+Nov 06 20:39:26 ..... started mapping
+Nov 06 20:52:38 ..... finished mapping
+Nov 06 20:52:38 ..... finished successfully
