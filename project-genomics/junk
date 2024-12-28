@@ -1,0 +1,92 @@
+
+Part-I: Understanding FASTQ format
+========================================================
+/groups/bioc6243/data/fastq/toy.fastq
+/groups/bioc6243/data/fastq/SRR1039508_1.fastq
+
+
+
+Part-II: Understanding SAM and BAM formats
+========================================================
+/groups/bioc6243/data/sam/toy.sam
+/groups/bioc6243/data/sam/SRR1039512.Aligned.out.sam
+/groups/bioc6243/data/bam/SRR1039512.Aligned.out.bam
+
+
+
+Part-III: Understanding VCF format
+========================================================
+/groups/bioc6243/data/vcf/toy.vcf
+/groups/bioc6243/data/vcf/real.vcf
+
+
+Part-IV: Understanding GTF format
+========================================================
+/groups/bioc6243/data/gtf/Homo_sapiens.GRCh37.75.gtf
+
+
+
+Part-V: Analyzing VCF files Understanding VCF
+========================================================
+/groups/bioc6243/data/vcf/tcga/
+The file name structure is {cancer_id}-subject-{subject_id}
+/groups/bioc6243/data/csv/tcganames.csv
+
+    
+    a) Using various linux commands, find the number of files/subjects for each cancer 
+       type (you will need to creaet a two column csv file with two fields "cancer_id" and "number_of_subjects").
+
+
+2) Exploring first top frequency SNP in each cancer
+    
+    a) python dump-snp-frequency.py -c 0.05 -r 1
+       How many distinct SNPs do you find if you run "python dump-snp-frequency.py -c 0.05 -r 1"? 
+       Give the listing you get.
+
+
+    b) python dump-snp-effect.py -s '12:25398285:C>A
+       For each SNP you get in 2(a), give the effect of the SNP.
+
+    c) python dump-formatted-cds.py -t ENST00000256078
+
+       Create a table with the following format:
+
+       #snp_in_genome,snp_effect_in_cds,snp_effect_in_peptide,passed_validation
+       12:11111111:X>Y,ENST00000000001:111:XYZ>YYZ,ENSP00000000001:22:A>E,yes
+       12:11111111:X>Z,ENST00000000001:111:XYZ>ZYZ,ENSP00000000002:22:A>S,no
+
+    d) Explore KRAS in BioMuta (https://hive.biochemistry.gwu.edu/biomuta/proteinview/P01116).
+       For each SNP you get in 2(a), what is the affected position in the UniProtKB sequence?
+
+    e) Explore KRAS in UniProtKB (https://www.uniprot.org/uniprot/P01116) in the "Pathology & Biotech"
+       section to list extra findings for the protein positions you get in 2(d).
+       
+       
+3) Repeat second top frequency SNP in each cancer
+    
+    a) How many distinct SNPs do you find if you run "python dump-snp-frequency.py -c 0.05 -r 2"?
+       Give the listing you get.
+
+    b) For each SNP you get in 3(a), give the effect of the SNP.
+
+    c) Use dump-formatted-cds.py script to display formatted transcript sequences for all transcript IDs
+       you get from 3(b), and validate the effect of the associated SNP.
+
+       Create a table with the following format:
+
+       #snp_in_genome,snp_effect_in_cds,snp_effect_in_peptide,passed_validation
+       12:11111111:X>Y,ENST00000000001:111:XYZ>YYZ,ENSP00000000001:22:A>E,yes
+       12:11111111:X>Z,ENST00000000001:111:XYZ>ZYZ,ENSP00000000002:22:A>S,no
+
+    d) Explore KRAS in BioMuta (https://hive.biochemistry.gwu.edu/biomuta/proteinview/P01116).
+       For each SNP you get in 3(a), what is the affected position in the UniProtKB sequence?
+
+    e) Explore KRAS in UniProtKB (https://www.uniprot.org/uniprot/P01116) in the "Pathology & Biotech"
+       section to list extra findings for the protein positions you get in 3(d). 
+
+
+
+
+
+
+    
